@@ -1,5 +1,12 @@
 package org.jvav;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -11,6 +18,10 @@ import javax.sound.sampled.DataLine;
  * @author 张浩洋博士
  */
 public class Util {
+	/*
+	 * 获取当前目录
+	 */
+	public static String userpath = System.getProperty("user.dir");
 	/**
 	 * Jvav输出
 	 * @author 张浩洋博士
@@ -54,5 +65,30 @@ public class Util {
 		synchronized (object) {
 			object.notify();
 		}
+	}
+	@SuppressWarnings("finally")
+	public static String version(){
+		String version = null;
+		try {
+			InputStream vStream = Util.class.getResourceAsStream("/res/Version.txt");
+			InputStreamReader sr = new InputStreamReader(vStream, "UTF-8");
+			BufferedReader br = new BufferedReader(sr);
+			version = br.readLine();
+			br.close();
+			sr.close();
+		} finally {
+			// TODO 自动生成的 catch 块
+			return version;
+		}
+	}
+	public static void getVersionFile() {
+		try {
+			URL url = new URL("");
+		} catch (MalformedURLException e) {
+			// TODO 自动生成的 catch 块
+		}
+	}
+	public static boolean isOutDate(String getVersion) {
+		return true;
 	}
 }

@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
 public class Main {
 	public static Scanner sc = new Scanner(System.in);
 	private static String bit = System.getProperty("os.arch");
-	private static String ver = "\"0.1.1 Dev\"";
+	private static String ver = Util.version();
 	private static String version = "Jvav version " + ver + "\nJvav(TM) Jvav Build Kit " + "(" + ver + ")\nJvav HotToilet(TM) " + bit + " Toilet VM " + "(" +"Build " + ver + ", Toilet Mode" + ")";
 	public static CountDownLatch downLatch = new CountDownLatch(0);
 	/**
@@ -26,14 +26,18 @@ public class Main {
 		try {
 			for (int i = 0; i < args.length + 1; i++) {
 				String arg = args[i];
-				command(arg);
 			}
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println(version + " 制造者:张浩杨博士");
 			while (true) {
 				System.out.print("=>");
 				String input = sc.nextLine();
-				command(input);
+				String [] arg = input.split("\\ ");
+				if (arg[1] != null) {
+					command(arg[0], arg[1]);
+				} else {
+					command(input, null);
+				}
 			}
 		}
 	}
@@ -41,10 +45,11 @@ public class Main {
 	 * Jvav命令解释器
 	 * <p>私有方法</p>
 	 * @author 张浩杨博士
+	 * @param <T>
 	 * @param command
 	 * @since Jvav 0.0.1
 	 */
-	private static void command(String command) {
+	private static <T> void command(String command, T t) {
 		switch(command.toLowerCase()) {
 		case "ad":
 			if (JvavAD.threadRun == false) {
@@ -58,6 +63,9 @@ public class Main {
 			break;
 		case "chat":
 			JvavChatbot.chat(sc);
+			break;
+		case "update":
+			System.out.println(version);
 			break;
 		case "clad":
 			JvavAD.jFrame.dispose();
@@ -75,6 +83,7 @@ public class Main {
 					+ "\nAD - 显示来自张浩杨博士推荐的广告"
 					+ "\nAUTHOR - 获取作者信息"
 					+ "\nCHAT - 启动张浩杨博士研制的智能机器人"
+					+ "\nUPADTE - 检测更新"
 					+ "\nCLAD - 强制关闭张浩杨博士推荐的广告"
 					+ "\nEXIT - 退出JVAV"
 					+ "\nHELP - 获取帮助"
